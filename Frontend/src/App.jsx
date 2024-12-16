@@ -1,25 +1,20 @@
 import React from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-
-function Box() {
+import {BrowserRouter as Router, Route, Routes, Link} from "react-router-dom";
+import ItemsPage from "./pages/ItemsPage";
+import ItemPage from "./pages/ItemPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import CartPage from "./pages/CartPage";
+export default function App() {
   return (
-    <mesh>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="orange" />
-    </mesh>
-  );
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage/>}/>
+        <Route path="/Login" element={<LoginPage/>}/>
+        <Route path="/List/:type" element={<ItemsPage />} />
+        <Route path="/Item/:id" element={<ItemPage />} />
+        <Route path="/my_cart" element={<CartPage />} />
+      </Routes>
+    </Router>
+  )
 }
-
-function App() {
-  return (
-    <Canvas>
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-      <Box />
-      <OrbitControls />
-    </Canvas>
-  );
-}
-
-export default App;
