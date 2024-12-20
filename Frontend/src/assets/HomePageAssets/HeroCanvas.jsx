@@ -3,11 +3,12 @@ import * as THREE from 'three'
 import { useFrame } from "@react-three/fiber";
 import { ScrollControls, Scroll, useScroll, Center, AccumulativeShadows, RandomizedLight, Text, Html } from "@react-three/drei";
 import Footting from "./Footting"
+import ItemsListIcon from "./ItemsListIcon";
 
 function HeroCanvas() {
   return (
     <>
-    <ScrollControls pages={2} damping={1}>
+    <ScrollControls pages={2} damping={0.1}>
       <Scroll>
         {/* Camera will zoom out as this content is revealed */}
         <CameraMovement/>
@@ -56,7 +57,7 @@ function Content3D() {
 
 function Sphere(props) {
     return(
-        <mesh {...props}>
+        <mesh {...props} castShadow receiveShadow>
             <sphereGeometry args={[1, 32, 32]} />
             <meshStandardMaterial/>
         </mesh>
@@ -72,8 +73,9 @@ function Content(){
             :Name_
             <meshStandardMaterial color="black"/>
         </Text>
-
-        
+        <ItemsListIcon location={"/Tshirt.glb"} href={"List/Tops"} position={[-2, 0, 2]} scale={[0.7, 0.7, 0.7]}/> 
+        <ItemsListIcon location={"/pants.glb"} href={"List/Bottoms"} position={[2, 0, 2]} scale={[1, 1, 1]}/>
+        <ItemsListIcon location={"/shoe.glb"} href={"List/Shoes"} position={[0, 0, 6]} scale={[0.5, 0.5, 0.5]}/>
         
     </group>
   );

@@ -2,63 +2,38 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Button, Card } from "flowbite-react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Text } from "@react-three/drei";
 import { useGLTF } from "@react-three/drei";
-
-function ItemCard({location, name, scale}) {
-    const { scene } = useGLTF(location);
-    return (
-      <Card className="max-w-sm">
-        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {name} acquisitions 2021
-        </h5>
-        <Canvas>
-            {/* Add some lighting */}
-          <ambientLight />
-          <pointLight position={[10, 10, 10]} />
-  
-          < primitive object={scene}  position={[0, 0, 0]} scale={[ scale, scale, scale]} />
-            {/* Add camera controls */}
-          <OrbitControls enableZoom = {false}/>
-        </Canvas>
-        <p className="font-normal text-gray-700 dark:text-gray-400">
-          Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-        </p>
-        <Button>
-          Add to cart
-        </Button>
-      </Card>
-    );
-  }
+import { TextInput, Navbar} from "flowbite-react";
+import {HiSearch} from "react-icons/hi"
+import ItemCard from "../assets/ItemsList/ItemCard";
+import { NavbarComp } from "../assets/NavbarComp";
+import { Mesh } from "three";
 
 export default function ItemsPage() {
-    const { type } = useParams();
+  const { type } = useParams();
+  console.log(type);
   return (
     <>
-        <h1>{type}</h1>
-        <Card className="max-w-sm">
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  Noteworthy technology acquisitions 2021
-                </h5>
-                <Canvas>
-                
-                  {/* Add some lighting */}
-                  <ambientLight />
-                  <pointLight position={[10, 10, 10]} />
-                  
-                  {/* Add camera controls */}
-                  <OrbitControls />
-                </Canvas>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                  Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                </p>
-                <Button>
-                  Add to cart
-                </Button>
-              </Card>
-              <ItemCard name={"shoe"} location={"/shoe.glb"} scale={2.1}/>
-              <ItemCard name={"pants"} location={"/pants.glb"} scale={4}/>
-            
+      <div className="fixed top-0 left-0 w-screen h-screen">
+        <NavbarComp currentLocation = {type}/>
+        <Canvas fov={200}>
+          <ambientLight/>
+          <color attach="background" args={["#f0f0f0"]} />
+          <Text  position={[0, 2, -10]} fontSize={5}>
+            {type}
+            <meshStandardMaterial color="black"/>
+          </Text>
+          <ItemCard position={[-5, 0, 0]} scale={[0.5, 0.5, 0.5]} name={"Item1"} price={"$100"} location={"/shoe.glb"}/>
+          <ItemCard position={[0, 0, 0]} scale={[0.5, 0.5, 0.5]} name={"Item2"} price={"$100"} location={"/pants.glb"}/>
+          <ItemCard position={[5, 0, 0]} scale={[0.5, 0.5, 0.5]} name={"Item3"} price={"$100"} location={"/Tshirt.glb"}/>
+
+          <ItemCard position={[-5, 0, 6]} scale={[0.5, 0.5, 0.5]} name={"Item4"} price={"$100"} location={"/shoe.glb"}/>
+          <ItemCard position={[0, 0, 6]} scale={[0.5, 0.5, 0.5]} name={"Item5"} price={"$100"} location={"/pants.glb"}/>
+          <ItemCard position={[5, 0, 6]} scale={[0.5, 0.5, 0.5]} name={"Item6"} price={"$100"} location={"/Tshirt.glb"}/>
+          <OrbitControls/>
+        </Canvas>
+      </div>  
     </>
   );
 }
