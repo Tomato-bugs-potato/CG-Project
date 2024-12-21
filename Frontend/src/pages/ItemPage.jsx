@@ -16,7 +16,7 @@ export default function ItemPage() {
       <div className="overflow-x-hidden">
         <NavbarComp/>
         <div className="inline-flex h-[40rem] w-screen overflow-x-hidden scrollbar-hide gap-2 items-center m-2 justify-center">
-          <DisplayModel location = {"/Tshirt.glb"}/>
+          <DisplayModel location = {"/Work_Boot.glb"}/>
           <ItemDetails/>
         </div>
       </div>
