@@ -1,39 +1,125 @@
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Card } from "flowbite-react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Text } from "@react-three/drei";
-import { useGLTF } from "@react-three/drei";
-import { TextInput, Navbar} from "flowbite-react";
-import {HiSearch} from "react-icons/hi"
 import ItemCard from "../assets/ItemsList/ItemCard";
 import { NavbarComp } from "../assets/NavbarComp";
-import { Mesh } from "three";
+import { db } from "../firebase/firebase";
+import { getDocs, collection } from "firebase/firestore";
+import LodingItemCard from "../assets/ItemsList/LodingItemCard";
 
-export default function ItemsPage() {
-  const { type } = useParams();
-  console.log(type);
+function Scene({ scrollPosition }) {
+  const [ItemsList, setItemsList] = useState([]);
+  const ItemsCollectionRef = collection(db, "items");
+
+  // Fetch items from the database
+  useEffect(() => {
+    const getItems = async () => {
+      try {
+        const data = await getDocs(ItemsCollectionRef);
+        const filteredData = data.docs.map((doc, index) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        console.log(filteredData);
+        setItemsList(filteredData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getItems();
+  }, []);
+
+  const filteredItems = ItemsList.filter(
+    (item) => item.type === useParams().type
+  );
+  console.log(filteredItems);
+
+  // Render ItemCards based on filtered items
+  const renderItems = () => {
+    let inc = 0;
+    return filteredItems.map((item, i) => {
+      let position;
+      if (i % 3 === 0) {
+        position = [-5, 0, inc];
+      } else if (i % 3 === 1) {
+        position = [0, 0, inc];
+      } else {
+        position = [5, 0, inc];
+        inc += 6;
+      }
+      return (
+        <>
+        {console.log(item.id)}
+        <ItemCard
+          key={item.id}
+          id={item.id}
+          position={position}
+          scale={[0.75, 0.75, 0.75]}
+          name={item.Name}
+          price={item.price}
+          location={item.mesh}
+          scrollPosition={scrollPosition}
+        />
+        </>
+      );
+    });
+  };
+
   return (
     <>
-      <div className="fixed top-0 left-0 w-screen h-screen">
-        <NavbarComp currentLocation = {type}/>
-        <Canvas fov={200}>
-          <ambientLight/>
-          <color attach="background" args={["#f0f0f0"]} />
-          <Text  position={[0, 2, -10]} fontSize={5}>
-            {type}
-            <meshStandardMaterial color="black"/>
-          </Text>
-          <ItemCard position={[-5, 0, 0]} scale={[0.5, 0.5, 0.5]} name={"Item1"} price={"$100"} location={"/shoe.glb"}/>
-          <ItemCard position={[0, 0, 0]} scale={[0.5, 0.5, 0.5]} name={"Item2"} price={"$100"} location={"/pants.glb"}/>
-          <ItemCard position={[5, 0, 0]} scale={[0.5, 0.5, 0.5]} name={"Item3"} price={"$100"} location={"/Tshirt.glb"}/>
+      <ambientLight intensity={0.5} />
+      <mesh position={[0, -1, -5.1]} visible={false}>
+        <planeGeometry args={[20, 3]} />
+        <meshStandardMaterial />
+      </mesh>
+      <Text position={[0, 2, -10]} fontSize={5}>
+        {useParams().type}
+        <meshStandardMaterial color="black" />
+      </Text>
+      {filteredItems.length > 0 ? (
+        renderItems()
+      ) : (
+        <>
+          <LodingItemCard position={[-5, 0, 0]} />
+          <LodingItemCard position={[0, 0, 0]} />
+          <LodingItemCard position={[5, 0, 0]} />
+        </>
+      )}
+      <OrbitControls
+        enableZoom={false}
+        enablePan={false}
+        enableRotate={true}
+        minPolarAngle={Math.PI / 2}
+        maxPolarAngle={Math.PI / 2}
+        minAzimuthAngle={0}
+        maxAzimuthAngle={0}
+      />
+    </>
+  );
+}
 
-          <ItemCard position={[-5, 0, 6]} scale={[0.5, 0.5, 0.5]} name={"Item4"} price={"$100"} location={"/shoe.glb"}/>
-          <ItemCard position={[0, 0, 6]} scale={[0.5, 0.5, 0.5]} name={"Item5"} price={"$100"} location={"/pants.glb"}/>
-          <ItemCard position={[5, 0, 6]} scale={[0.5, 0.5, 0.5]} name={"Item6"} price={"$100"} location={"/Tshirt.glb"}/>
-          <OrbitControls/>
+
+export default function ItemsPage() {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const { type } = useParams();
+
+  const handleWheel = useCallback((event) => {
+    setScrollPosition((prev) => {
+      const newPosition = prev + event.deltaY * 0.01;
+      return Math.max(0, newPosition); // Prevent scrolling into negative values
+    });
+  }, []);
+
+  return (
+    <>
+      <div className="fixed top-0 left-0 w-screen h-screen" onWheel={handleWheel}>
+        <NavbarComp currentLocation={type} />
+        <Canvas fov={75}>
+          <color attach="background" args={["#f0f0f0"]} />
+          <Scene scrollPosition={scrollPosition} />
         </Canvas>
-      </div>  
+      </div>
     </>
   );
 }

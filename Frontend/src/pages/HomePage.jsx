@@ -4,12 +4,14 @@ import HeroCanvas from "../assets/HomePageAssets/HeroCanvas";
 import { Environment, OrbitControls } from "@react-three/drei";
 import * as THREE from 'three'
 import Footing from '../assets/HomePageAssets/Footting'
+import Header from '../assets/Header'
+import { auth } from "../firebase/firebase";
 export default function HomePage() {
     return (
         <>
             <div>
                 <div className="fixed top-0 left-0 w-screen h-screen">
-                    <Footing/>
+                    <Header/>
                     <Canvas shadows camera={{ position: [0, 0, 0] }}>
                         <color attach="background" args={["#f0f0f0"]} />
                         <ambientLight intensity={1} />

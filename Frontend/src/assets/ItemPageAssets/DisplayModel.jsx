@@ -2,9 +2,25 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import React, {useRef} from "react";
 import { useGLTF } from "@react-three/drei";
-import { use } from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function DisplayModel({location}) {
+    const [canvaStyle, setCanvasStyle] = useState({
+        width:"100%",
+    })
+    useEffect(() => {
+        const handleResize = () => {
+            setCanvasStyle({
+                width: window.innerWidth >= 768? "30%" : "100%",
+            })
+        }
+        window.addEventListener("resize", handleResize);
+        handleResize();
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        }
+    },[])
     function Model({location}){
         const {scene} = useGLTF(location);
         const ref = useRef();
@@ -20,9 +36,7 @@ export default function DisplayModel({location}) {
         <>
             <Canvas
                 style={
-                    {
-                        width: '30%',
-                    }
+                    canvaStyle
                 }
             >
                 <color attach="background" args={["#f0f0f0"]} />
