@@ -3,8 +3,18 @@ import {HiSearch} from "react-icons/hi"
 import { auth } from "../firebase/firebase";
 import { useEffect, useState } from "react";
 import SeachResult from "./SeachResult";
+import { Spinner } from "flowbite-react";
 export function NavbarComp({currentLocation}) {
   const [searched, setSearched] = useState("");
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
   return (
     <Navbar fluid rounded>
       <Navbar.Brand href="/">
@@ -24,9 +34,16 @@ export function NavbarComp({currentLocation}) {
         </Navbar.Link>
         <Navbar.Link href="/List/Bottoms" active={currentLocation === "Bottoms"}>Bottoms</Navbar.Link>
         <Navbar.Link href="/List/Shoes" active={currentLocation === "Shoes"}>Shoes</Navbar.Link>
-            <Navbar.Link href="/my_cart">my cart</Navbar.Link>
-            <Navbar.Link href="/wardrobe">wardrobe</Navbar.Link>
-            {auth.currentUser?<Navbar.Link href="/signout">Sign out</Navbar.Link>:<Navbar.Link href="/auth">Sign in</Navbar.Link>}
+        {loading?
+          <Spinner/>:
+          user?
+          <>
+            <Navbar.Link href="/my_cart" active={currentLocation === "my_cart"}>my cart</Navbar.Link>
+            <Navbar.Link href="/wardrobe" active={currentLocation === "Wardrobe"}>wardrobe</Navbar.Link>
+            <Navbar.Link href="/sign">Sign out</Navbar.Link>
+          </>:
+          <Navbar.Link href="/auth">Sign in</Navbar.Link>
+        }
       </Navbar.Collapse>
     </Navbar>
   );

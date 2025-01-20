@@ -49,7 +49,7 @@ export default function SeachResult({ searched }) {
 
   const portalElement = document.getElementById("portal");
   if (!portalElement || searched === "") {
-    console.error("Portal element not found in the DOM.");
+   // console.error("Portal element not found in the DOM.");
     return null;
   }
 

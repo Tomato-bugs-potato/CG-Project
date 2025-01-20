@@ -40,7 +40,7 @@ export default function DisplayModel({location}) {
                 }
             >
                 <color attach="background" args={["#f0f0f0"]} />
-                <ambientLight intensity={2} />
+                <ambientLight intensity={6} />
                 <spotLight position={[10, 10, 10]} angle={0.5} penumbra={1} castShadow />
                 <pointLight position={[-10, 10, -10]} intensity={2} />
                 <Model location = {location} position={[0, 0, 0]}/>

@@ -1,8 +1,20 @@
 import { Button, MegaMenu, Navbar, Dropdown } from 'flowbite-react';
 import { auth } from '../firebase/firebase';
 import { signOut } from 'firebase/auth';
+import { useState, useEffect } from 'react';
+import { Spinner } from 'flowbite-react';
 
 export default function Header() {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
   return (
     <MegaMenu>
       <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4 md:space-x-8">
@@ -11,7 +23,7 @@ export default function Header() {
         </Navbar.Brand>
         <div className="order-2 hidden items-center md:flex">
           {
-            auth.currentUser?  
+            user?   
             <Dropdown label={auth.currentUser.email} inline>
                 <Dropdown.Item>wardrobe</Dropdown.Item>
                 <Dropdown.Item>my cart</Dropdown.Item>

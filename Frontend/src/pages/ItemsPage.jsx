@@ -68,7 +68,7 @@ function Scene({ scrollPosition }) {
 
   return (
     <>
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={6} />
       <mesh position={[0, -1, -5.1]} visible={false}>
         <planeGeometry args={[20, 3]} />
         <meshStandardMaterial />

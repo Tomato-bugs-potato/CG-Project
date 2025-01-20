@@ -22,7 +22,7 @@ export default function SearchResultCard({ item }) {
             (<div onClick={() => window.location.href = `/item/${item.id}`}  className="w-[20rem] h-[20rem] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <Canvas>
                     <Model/>
-                    <ambientLight intensity={1} />
+                    <ambientLight intensity={5} />
                     <pointLight position={[10, 10, 10]} />
                     <Html position={[0, -2, 0]} transform>
                         <div className="p-5">

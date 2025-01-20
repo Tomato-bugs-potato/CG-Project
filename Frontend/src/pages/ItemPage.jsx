@@ -36,7 +36,7 @@ export default function ItemPage() {
         <NavbarComp/>
         {item.mesh? <div className="md:inline-flex h-[40rem] w-screen overflow-x-hidden md:scrollbar-hide gap-2 items-center m-2 justify-center">
           <DisplayModel location = {item.mesh}/>
-          <ItemDetails details={item}/>
+          <ItemDetails details={item} itemID = {id}/>
         </div>
         :
         <div className="flex flex-row items-center justify-center h-screen">
