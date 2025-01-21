@@ -78,7 +78,6 @@ export default function CartPage() {
   return (
     <div className="w-screen h-screen">
         <NavbarComp/>
-        
         {userloading || !currentUser?(
           <div className="w-full h-4/5 flex flex-col justify-center items-center p-2 m-0">
             <Spinner className="xl"/>
