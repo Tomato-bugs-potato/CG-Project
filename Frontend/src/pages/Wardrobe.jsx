@@ -134,25 +134,24 @@ export default function Wardrobe() {
     <>
         <NavbarComp/>
         <div className=" flex flex-col md:flex-row h-screen">
-            <div className="md:w-1/4 p-4 md:overflow-y-auto">
-                <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">For your inventory</h2>
+            <div className="md:w-1/4 p-4 md:overflow-y-auto bg-white">
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white py-5">Form your cart</h2>
                 <Accordion>
                     <Accordion.Panel>
                         <Accordion.Title>Tops</Accordion.Title>
                         <Accordion.Content>
                             {cartError && <h1 className="text-red-600 p-3 bg-red-200">{error}</h1>}
                             {(cartItems.length > 0 && !cartLoading && !cartError) && (
-                            <fieldset className="flex max-w-md flex-col gap-4" onChange={(e) => setClothing({...clothing, Top: e.target.value})}>
+                            <div className="flex max-w-md flex-col gap-4">
                                 <legend className="mb-4">Pick a top</legend>
                                 {
                                     cartItems.filter((item) => item.type === "Tops").map((item, index) =>(
-                                        <div className="flex items-center gap-2" key={index}>
-                                            <Radio id = {item.id} name={item.name} value={item.mesh}/>
-                                            <Label htmlFor = {item.id}>{ item.Name }</Label>                                     
-                                        </div>
+                                        <button className="flex items-center gap-2 p-2 hover:bg-gray-200" key={index} onClick={() => setClothing({...clothing, Top: item.mesh})}>
+                                            { item.Name }                                    
+                                        </button>
                                     ))
                                 }
-                            </fieldset>
+                            </div>
                             )}
                             {(cartItems.length == 0 && !cartLoading && !cartError) && (
                                 <div> nothing here</div>
@@ -167,17 +166,16 @@ export default function Wardrobe() {
                         <Accordion.Content>
                         {cartError && <h1 className="text-red-600 p-3 bg-red-200">{error}</h1>}
                             {(cartItems.length > 0 && !cartLoading && !cartError) && (
-                            <fieldset className="flex max-w-md flex-col gap-4" onChange={(e) => setClothing({...clothing, Bottom: e.target.value})}>
+                            <div className="flex max-w-md flex-col gap-4">
                                 <legend className="mb-4">Pick a bottom</legend>
                                 {
                                     cartItems.filter((item) => item.type === "Bottoms").map((item, index) =>(
-                                        <div className="flex items-center gap-2" key={index}>
-                                            <Radio id = {item.id} name={item.name} value={item.mesh}/>
-                                            <Label htmlFor = {item.id}>{ item.Name }</Label>                                     
-                                        </div>
+                                        <button className="flex items-center gap-2 hover:bg-gray-200 p-2" key={index} onClick={()=>setClothing({...clothing, Bottom: item.mesh})}>
+                                            { item.Name }
+                                        </button>
                                     ))
                                 }
-                            </fieldset>
+                            </div>
                             )}
                             {(cartItems.length == 0 && !cartLoading && !cartError) && (
                                 <div> nothing here</div>
@@ -192,17 +190,16 @@ export default function Wardrobe() {
                         <Accordion.Content>
                         {cartError && <h1 className="text-red-600 p-3 bg-red-200">{error}</h1>}
                             {(cartItems.length > 0 && !cartLoading && !cartError) && (
-                            <fieldset className="flex max-w-md flex-col gap-4" onChange={handleInputChange}>
+                            <div className="flex max-w-md flex-col gap-4">
                                 <legend className="mb-4">Pick a pair of Shoes</legend>
                                 {
                                     cartItems.filter((item) => item.type === "Shoes").map((item, index) =>(
-                                        <div className="flex items-center gap-2" key={index}>
-                                            <Radio id = {item.id} name={item.name} value={item.mesh}/>
-                                            <Label htmlFor = {item.id}>{ item.Name }</Label>                                     
-                                        </div>
+                                        <button className="flex items-center gap-2 hover:bg-gray-200 p-2" key={index} onClick={() => setClothing({...clothing, Shoe: item.mesh})}>
+                                            { item.Name }                                
+                                        </button>
                                     ))
                                 }
-                            </fieldset>
+                            </div>
                             )}
                             {(cartItems.length == 0 && !cartLoading && !cartError) && (
                                 <div> nothing here</div>
@@ -214,33 +211,32 @@ export default function Wardrobe() {
                     </Accordion.Panel>
                 </Accordion>
             </div>
-            <div className="flex-grow p-4">
+            <div className="flex-grow p-4 bg-slate-200 rounded-xl md:h-4/5">
                 <Canvas>
                     <ambientLight intensity={5}/>
-                    <pointLight intensity={2}/>
+                    <pointLight intensity={2} position={[0, 1, 0]}/>
                     <ClothingChoice choice={clothing}/>
                     <OrbitControls/>
                 </Canvas>
             </div>
-            <div className="xl:w-1/4 p-4 md:overflow-y-auto">
-                <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">For your cart</h2>
+            <div className="xl:w-1/4 p-4 md:overflow-y-auto bg-white">
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white py-5">Form your inventory</h2>
                 <Accordion>
                     <Accordion.Panel>
                         <Accordion.Title>Tops</Accordion.Title>
                         <Accordion.Content>
                         {inventoryError && <h1 className="text-red-600 p-3 bg-red-200">{inventoryError}</h1>}
                             {(inventory.length > 0 && !inventoryLoading && !inventoryError) && (
-                            <fieldset className="flex max-w-md flex-col gap-4" onChange={(e) => setClothing({...clothing, Top: e.target.value})}>
+                            <div className="flex max-w-md flex-col gap-4">
                                 <legend className="mb-4">Pick a top</legend>
                                 {
                                     inventory.filter((item) => item.type === "Tops").map((item, index) =>(
-                                        <div className="flex items-center gap-2" key={index}>
-                                            <Radio id = {item.id} name={item.name} value={item.mesh}/>
-                                            <Label htmlFor = {item.id}>{ item.Name }</Label>                                     
-                                        </div>
+                                        <button className="flex items-center gap-2 p-2 hover:bg-gray-200" key={index} onClick={() => setClothing({...clothing, Top: item.mesh})}>
+                                            { item.Name }                                    
+                                        </button>
                                     ))
                                 }
-                            </fieldset>
+                            </div>
                             )}
                             {(inventory.length == 0 && !inventoryLoading && !inventoryError) && (
                                 <div> nothing here</div>
@@ -255,17 +251,16 @@ export default function Wardrobe() {
                         <Accordion.Content>
                         {inventoryError && <h1 className="text-red-600 p-3 bg-red-200">{inventoryError}</h1>}
                             {(inventory.length > 0 && !inventoryLoading && !inventoryError) && (
-                            <fieldset className="flex max-w-md flex-col gap-4" onChange={(e) => setClothing({...clothing, Bottom: e.target.value})}>
+                            <div className="flex max-w-md flex-col gap-4">
                                 <legend className="mb-4">Pick a bottom</legend>
                                 {
                                     inventory.filter((item) => item.type === "Bottoms").map((item, index) =>(
-                                        <div className="flex items-center gap-2" key={index}>
-                                            <Radio id = {item.id} name={item.name} value={item.mesh}/>
-                                            <Label htmlFor = {item.id}>{ item.Name }</Label>                                     
-                                        </div>
+                                        <button className="flex items-center gap-2 hover:bg-gray-200 p-2" key={index} onClick={()=>setClothing({...clothing, Bottom: item.mesh})}>
+                                            { item.Name }
+                                        </button>
                                     ))
                                 }
-                            </fieldset>
+                            </div>
                             )}
                             {(inventory.length == 0 && !inventoryLoading && !inventoryError) && (
                                 <div> nothing here</div>
@@ -280,17 +275,16 @@ export default function Wardrobe() {
                         <Accordion.Content>
                         {inventoryError && <h1 className="text-red-600 p-3 bg-red-200">{inventoryError}</h1>}
                             {(inventory.length > 0 && !inventoryLoading && !inventoryError) && (
-                            <fieldset className="flex max-w-md flex-col gap-4" onChange={(e) => setClothing({...clothing, Shoe: e.target.value})}>
-                                <legend className="mb-4">Pick a pair of shoes</legend>
+                            <div className="flex max-w-md flex-col gap-4">
+                                <legend className="mb-4">Pick a pair of Shoes</legend>
                                 {
                                     inventory.filter((item) => item.type === "Shoes").map((item, index) =>(
-                                        <div className="flex items-center gap-2" key={index}>
-                                            <Radio id = {item.id} name={item.name} value={item.mesh}/>
-                                            <Label htmlFor = {item.id}>{ item.Name }</Label>                                     
-                                        </div>
+                                        <button className="flex items-center gap-2 hover:bg-gray-200 p-2" key={index} onClick={() => setClothing({...clothing, Shoe: item.mesh})}>
+                                            { item.Name }                                
+                                        </button>
                                     ))
                                 }
-                            </fieldset>
+                            </div>
                             )}
                             {(inventory.length == 0 && !inventoryLoading && !inventoryError) && (
                                 <div> nothing here</div>

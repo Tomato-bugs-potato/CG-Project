@@ -53,7 +53,7 @@ export default function ItemDetails({details, itemID}) {
 
     
     return (
-        <Card className="max-w-sm">
+        <Card className="w-xl md:w-[23rem]">
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{details.Name}</h1>
             <p className="font-normal text-gray-700 dark:text-gray-400">{details.price}</p>
             <AddToCartButton itemID={itemID}/>

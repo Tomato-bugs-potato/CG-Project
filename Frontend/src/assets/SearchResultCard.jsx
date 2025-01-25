@@ -6,8 +6,9 @@ import { Html } from "@react-three/drei";
 export default function SearchResultCard({ item }) {
     
    function Model(){
-          const {scene} = useGLTF(item.mesh);
+          const {scene: originalScene} = useGLTF(item.mesh);
           const ref = useRef();
+          const scene = originalScene.clone();
           useFrame(() => (
               scene.rotation.y += 0.01
           ));

@@ -17,7 +17,7 @@ export function NavbarComp({currentLocation}) {
   }, []);
   return (
     <Navbar fluid rounded>
-      <Navbar.Brand href="/">
+      <Navbar.Brand href="/" className="text-inherit">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">:Name_</span>
       </Navbar.Brand>
       <div className="flex md:order-2">
@@ -25,11 +25,8 @@ export function NavbarComp({currentLocation}) {
         <SeachResult searched={searched}/>
         <Navbar.Toggle />
       </div>
-      <div>
-          
-      </div>
-      <Navbar.Collapse>
-        <Navbar.Link href="/List/Tops" active={currentLocation === "Tops"}>
+      <Navbar.Collapse className="text-inherit">
+        <Navbar.Link href="/List/Tops" active={currentLocation === "Tops"} className="text-inherit">
           Tops
         </Navbar.Link>
         <Navbar.Link href="/List/Bottoms" active={currentLocation === "Bottoms"}>Bottoms</Navbar.Link>

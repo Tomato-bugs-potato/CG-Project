@@ -11,13 +11,13 @@ export default function ClothingChoice({choice}) {
     return (
         <group>
             {choice.Top != "" &&
-                <Model location={choice.Top} position={[0, 1, 0]}/>
+                <Model location={choice.Top} position={[0, 0.8, 0]}/>
             }
             {choice.Bottom != "" &&
                 <Model location={choice.Bottom} position={[0, 0, 0]}/>
             }
             {choice.Shoe != "" &&
-                <Model location={choice.Shoe} position={[0, -1, 0]}/>
+                <Model location={choice.Shoe} position={[0, -0.5, 0]}/>
             }
         </group>
     );

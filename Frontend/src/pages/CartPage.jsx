@@ -141,7 +141,7 @@ function Displaycard({data, setCartItems, cartItems, userID}){
           ));
   
           return(
-              <primitive object={scene} scale={[1.5, 1.5, 1.5]}/>
+              <primitive object={scene} scale={[3, 3, 3]}/>
           )
       }
   return(

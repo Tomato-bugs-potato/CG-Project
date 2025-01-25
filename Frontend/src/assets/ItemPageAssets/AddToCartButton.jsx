@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../../firebase/firebase";
 import { doc, getDoc, getDocs, updateDoc, arrayUnion, collection, query, where } from "firebase/firestore";
-import { Button, Spinner } from "flowbite-react";
-
+import { Button, Spinner, Alert } from "flowbite-react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 export default function AddToCartButton({itemID}) {
     const [ isLoading, setIsLoading] = useState(false);
@@ -56,7 +56,14 @@ export default function AddToCartButton({itemID}) {
         return <Button disabled><Spinner/><span className='ml-1'>Adding to cart...</span></Button>;
     }
     if(error){
-        return <Button onClick={handleAddToCart} className=" bg-red-900 text-white">Error: {error.message}</Button>;
+        return (
+            <div className="flex flex-col">
+                <Alert color="failure" icon={HiOutlineExclamationCircle}>
+                    <span className="font-medium">Error!</span> {error.message}
+                </Alert>
+                <Button onClick={handleAddToCart} className=" bg-red-900 text-white">Add to cart</Button>
+            </div>
+        );
     }
     return (
         <Button onClick={handleAddToCart}> Add to Cart</Button>

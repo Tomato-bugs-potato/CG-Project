@@ -33,19 +33,23 @@ function Scene({ scrollPosition }) {
   const filteredItems = ItemsList.filter(
     (item) => item.type === useParams().type
   );
-  console.log(filteredItems);
 
-  // Render ItemCards based on filtered items
   const renderItems = () => {
     let inc = 0;
     return filteredItems.map((item, i) => {
       let position;
-      if (i % 3 === 0) {
-        position = [-5, 0, inc];
-      } else if (i % 3 === 1) {
-        position = [0, 0, inc];
-      } else {
-        position = [5, 0, inc];
+      if(window.innerWidth > 768){
+        if (i % 3 === 0) {
+          position = [-5, 0, inc];
+        } else if (i % 3 === 1) {
+          position = [0, 0, inc];
+        } else {
+          position = [5, 0, inc];
+          inc += 6;
+        }
+      }
+      else{
+        position = [0 , 0, inc];
         inc += 6;
       }
       return (
@@ -55,7 +59,7 @@ function Scene({ scrollPosition }) {
           key={item.id}
           id={item.id}
           position={position}
-          scale={[0.75, 0.75, 0.75]}
+          scale={[2, 2, 2]}
           name={item.Name}
           price={item.price}
           location={item.mesh}
@@ -68,15 +72,24 @@ function Scene({ scrollPosition }) {
 
   return (
     <>
+
       <ambientLight intensity={6} />
       <mesh position={[0, -1, -5.1]} visible={false}>
         <planeGeometry args={[20, 3]} />
         <meshStandardMaterial />
       </mesh>
-      <Text position={[0, 2, -10]} fontSize={5}>
-        {useParams().type}
-        <meshStandardMaterial color="black" />
-      </Text>
+      {
+        window.innerWidth > 768?
+        (<Text position={[0, 2, -10]} fontSize={5}>
+          {useParams().type}
+          <meshStandardMaterial color="black" />
+        </Text>)
+        :
+        (<Text position={[0, 2, -15]} fontSize={5}>
+          {useParams().type}
+          <meshStandardMaterial color="black" />
+        </Text>)
+      }
       {filteredItems.length > 0 ? (
         renderItems()
       ) : (

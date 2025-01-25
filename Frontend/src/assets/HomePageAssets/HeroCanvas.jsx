@@ -73,9 +73,9 @@ function Content(){
             :Name_
             <meshStandardMaterial color="black"/>
         </Text>
-        <ItemsListIcon location={"/Tshirt.glb"} href={"List/Tops"} position={[-2, 0, 2]} scale={[0.7, 0.7, 0.7]}/> 
-        <ItemsListIcon location={"/pants.glb"} href={"List/Bottoms"} position={[2, 0, 2]} scale={[1, 1, 1]}/>
-        <ItemsListIcon location={"/shoe.glb"} href={"List/Shoes"} position={[0, 0, 6]} scale={[0.5, 0.5, 0.5]}/>
+        <ItemsListIcon location={"/Tshirt.glb"} href={"List/Tops"} position={[-2, 0, 2]} scale={[2, 2, 2]}/> 
+        <ItemsListIcon location={"/pants.glb"} href={"List/Bottoms"} position={[2, 0, 2]} scale={[2, 2, 2]}/>
+        <ItemsListIcon location={"/shoe.glb"} href={"List/Shoes"} position={[0, 0, 6]} scale={[2, 2, 2]}/>
         
     </group>
   );
